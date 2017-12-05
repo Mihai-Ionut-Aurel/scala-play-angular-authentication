@@ -1,0 +1,39 @@
+﻿<form class="form" [formGroup]="sign_in_form" (ngSubmit)="sign_in()" [hidden]="submitted">
+    <section class="form-block">
+        <label>Login</label>
+        <div class="form-group">
+            <label for="email">Email</label>
+            <label for="email"
+                   aria-haspopup="true"
+                   role="tooltip"
+                   class="tooltip tooltip-validation tooltip-sm"
+                   [class.invalid]="sign_in_form.get('email').invalid
+                    && (sign_in_form.get('email').dirty || sign_in_form.get('email').touched)">
+                <input id="email" type="text"
+                       formControlName="email">
+                <span class="tooltip-content">
+                   Email is required.
+                </span>
+            </label>
+            <label for="password">Password</label>
+            <label for="password"
+                   aria-haspopup="true"
+                   role="tooltip"
+                   class="tooltip tooltip-validation tooltip-sm"
+                   [class.invalid]="sign_in_form.get('password').invalid
+                    && (sign_in_form.get('password').dirty || sign_in_form.get('password').touched)">
+                <input id="password" type="password"
+                       formControlName="password">
+                <span class="tooltip-content">
+                   Email is required.
+                </span>
+            </label>
+            <input type="checkbox" id="remember_me" formControlName="remember_me">
+            <label for="remember_me">Remember me</label>
+        </div>
+
+        <button class="btn btn-primary"
+                type="submit"
+                [disabled]="sign_in_form.invalid">Sign in</button>
+    </section>
+</form>

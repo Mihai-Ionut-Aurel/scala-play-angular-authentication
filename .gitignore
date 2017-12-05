@@ -1,0 +1,16 @@
+logs
+target
+/.idea
+/.idea_modules
+/.classpath
+/.project
+/.settings
+/RUNNING_PID
+/public/ui
+logs
+project/project
+project/target
+target
+tmp
+dist
+.cache
