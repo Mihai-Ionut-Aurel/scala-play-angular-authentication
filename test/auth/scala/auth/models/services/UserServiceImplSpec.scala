@@ -87,7 +87,7 @@ class UserServiceImplSpec extends PlaySpecification with Mockito with NoLanguage
       u.loginInfo must be equalTo Seq(loginInfo)
       u.name must be equalTo user.name
       u.email must be equalTo user.email
-      u.avatarURL must be equalTo user.avatarURL
+      //u.avatarURL must be equalTo user.avatarURL
       u.registration must be equalTo user.registration
       u.settings must be equalTo user.settings
 

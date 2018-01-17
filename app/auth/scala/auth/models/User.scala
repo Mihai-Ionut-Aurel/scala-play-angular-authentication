@@ -9,10 +9,11 @@ import reactivemongo.bson.BSONObjectID
  * @param id           The unique ID of the user.
  * @param name         Maybe the name of the authenticated user.
  * @param email        Maybe the email of the authenticated provider.
- * @param avatarURL    Maybe the avatar URL of the authenticated provider.
+
  * @param registration The registration data.
  * @param settings     The user settings.
  */
+//* @param avatarURL    Maybe the avatar URL of the authenticated provider.
 case class User(
   id: BSONObjectID,
   loginInfo: Seq[LoginInfo],

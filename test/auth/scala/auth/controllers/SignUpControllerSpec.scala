@@ -130,7 +130,7 @@ class SignUpControllerSpec
         val captor = capture[User]
         val host = "localhost:9000"
         val userAgent = "Chrome/58.0.3029.81 Safari/537.36"
-        val avatarURL = "http://my.avatar/photo.jpg"
+       // val avatarURL = "http://my.avatar/photo.jpg"
         val hashedPassword = "hashed-password"
         val passwordHasher = mock[PasswordHasher].smart
         val passwordInfo = PasswordInfo("test-hasher", hashedPassword)
@@ -150,7 +150,7 @@ class SignUpControllerSpec
         passwordHasher.hash(password) returns passwordInfo
         passwordHasherRegistry.current returns passwordHasher
         userService.retrieve(loginInfo) returns Future.successful(None)
-        avatarService.retrieveURL(email) returns Future.successful(Some(avatarURL))
+        //avatarService.retrieveURL(email) returns Future.successful(Some(avatarURL))
         authInfoRepository.add(loginInfo, passwordInfo) returns Future.successful(passwordInfo)
         authTokenService.create(user.id, 5 minutes) returns Future.successful(authToken)
         userService.save(any[User]) returns Future.successful(user)
@@ -168,7 +168,7 @@ class SignUpControllerSpec
         u.loginInfo must be equalTo Seq(loginInfo)
         u.name must beSome(name)
         u.email must beSome(email)
-        u.avatarURL must beSome(avatarURL)
+        //u.avatarURL must beSome(avatarURL)
         u.registration.lang must be equalTo lang
         u.registration.ip must be equalTo "127.0.0.1"
         u.registration.host must beSome(host)

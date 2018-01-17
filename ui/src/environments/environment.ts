@@ -6,11 +6,12 @@
 export const environment = {
   production: false,
     auth_api: "http://localhost:9000/api/auth",
-    sign_in: "/sign_in",
-    sign_up: "/sign_up",
-    sign_out: "/sign_out",
-    get_user: "/user",
-    activation: "/account/activation",
-    password_recovery: "/password/recovery"
+    sign_in: "sign_in",
+    sign_up: "sign_up",
+    sign_out: "sign_out",
+    get_user: "user",
+    activation: "account/activation",
+    password_recovery: "password/recovery",
+    csrfCookieName: "PLAY_CSRF_TOKEN"
 
 };

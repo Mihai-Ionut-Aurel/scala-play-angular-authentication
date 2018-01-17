@@ -35,7 +35,7 @@ import scala.language.postfixOps
  * @param userService            The user service implementation.
  * @param authInfoRepository     The auth info repository implementation.
  * @param authTokenService       The auth token service implementation.
- * @param avatarService          The avatar service implementation.
+  * @param avatarService          The avatar service implementation.
  * @param passwordHasherRegistry The password hasher registry.
  * @param mailerClient           The mailer client.
  * @param configuration          The Play configuration.
@@ -91,9 +91,12 @@ class SignUpController @Inject() (
           case Some(user) => signUpExistingUser(data, user)
           case None       => signUpNewUser(data, loginInfo)
         }.map { _ =>
+          Logger.debug("Create API response")
           Created(ApiResponse("auth.signUp.successful", Messages("auth.sign.up.email.sent", data.email)))
         }
+
       }
+
     )
 
   }
@@ -157,11 +160,13 @@ class SignUpController @Inject() (
       )
     )
     for {
+
       avatar <- avatarService.retrieveURL(data.email)
       user <- userService.save(user.copy(avatarURL = avatar))
       _ <- authInfoRepository.add(loginInfo, authInfo)
       authToken <- authTokenService.create(user.id, tokenExpiry)
     } yield {
+
       val url = jsRouter.absoluteURL("/auth/account/activation/" + authToken.id)
       mailerClient.send(Email(
         subject = Messages("auth.email.sign.up.subject"),
@@ -170,9 +175,9 @@ class SignUpController @Inject() (
         // TODO :
 
       //  bodyText = Some( auth.twirl.auth.views.html.emails.signUp(user, url).body),
-       // bodyHtml = Some( auth.twirl.auth.views.html.emails.signUp(user, url).body)
+      //  bodyHtml = Some( auth.twirl.auth.views.html.emails.signUp(user, url).body)
       ))
-
+      Logger.debug("send to event buss")
       silhouette.env.eventBus.publish(SignUpEvent(user, request))
     }
   }

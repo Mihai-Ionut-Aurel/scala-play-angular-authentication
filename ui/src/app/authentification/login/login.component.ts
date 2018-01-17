@@ -25,6 +25,7 @@ export class LoginComponent implements OnInit {
     ngOnInit() {
         // reset sign_in status
         this.authenticationService.logout();
+        this.sign_in_form.patchValue({"remember_me":false})
     }
 
     sign_in() {
@@ -32,7 +33,7 @@ export class LoginComponent implements OnInit {
         this.authenticationService.sign_in(this.sign_in_form.get("email").value, this.sign_in_form.get("password").value,this.sign_in_form.get("remember_me").value)
             .subscribe(result => {
                 if (result === true) {
-                    this.router.navigate(['/']);
+                    this.router.navigate(['/profile']);
                 } else {
                     //this.error = 'Username or password is incorrect';
                     //this.loading = false;

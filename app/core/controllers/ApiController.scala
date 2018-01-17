@@ -1,8 +1,9 @@
 package core.controllers
 
+import play.api.Logger
 import play.api.data.FormError
 import play.api.http.Writeable
-import play.api.i18n.{ I18nSupport, Messages, MessagesProvider }
+import play.api.i18n.{I18nSupport, Messages, MessagesProvider}
 import play.api.libs.json.Writes._
 import play.api.libs.json._
 import play.api.mvc.BaseController
@@ -49,6 +50,7 @@ trait ApiController extends BaseController with I18nSupport {
   case class ApiResponse[T](code: String, description: String, details: T)
   object ApiResponse {
     def apply(code: String, description: String): ApiResponse[List[String]] = {
+      Logger.debug("Api response: {} {}"+code+" "+description)
       ApiResponse(code, description, List())
     }
     implicit def jsonWrites[T](implicit detail: Writes[T]): Writes[ApiResponse[T]] = {

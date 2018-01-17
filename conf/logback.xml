@@ -24,8 +24,11 @@
     <appender-ref ref="STDOUT" />
   </appender>
 
-  <logger name="play" level="INFO" />
-  <logger name="application" level="DEBUG" />
+  <logger name="play" level="TRACE" />
+  <logger name="application" level="TRACE" />
+
+  <logger name="com.mohiva" level="TRACE" />
+  <logger name="com.mohiva.play.silhouette.api.Silhouette" level="TRACE" />
 
   <root level="INFO">
     <appender-ref ref="ASYNCFILE" />
