@@ -1,5 +1,5 @@
 ﻿import { Injectable } from '@angular/core';
-import {  HttpHeaders } from '@angular/common/http';
+
 import {AuthAPI} from "./index";
 import { Observable } from 'rxjs';
 import 'rxjs/add/operator/map'
@@ -19,8 +19,8 @@ export class AuthenticationService {
     sign_in(email: string, password: string,remember_me: boolean): Observable<boolean> {
         return this.authapi.jsonRequest(environment.sign_in,{ email: email, password: password, rememberMe: remember_me }).map(data =>{
                 let token = data['details'];
-                console.log(data);
-                console.log(token);
+                console.log("Data: "+JSON.stringify(data));
+                console.log("Token sign in: "+JSON.stringify(token));
                 if (token) {
                     // set token property
                     this.token = token;

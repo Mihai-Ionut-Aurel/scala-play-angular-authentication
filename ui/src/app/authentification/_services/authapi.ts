@@ -33,6 +33,7 @@ export class AuthAPI {
     request(route: string):Observable<APIResponse> {
         console.log("request")
         return this.statusHandler(this.http.get(`${environment.auth_api}/${route}`, {
+        observe: 'response',
         }));
     }
 
@@ -53,6 +54,7 @@ export class AuthAPI {
                     'Content-Type': 'application/json; charset=utf-8',
                     Accept: 'application/json',
                 },
+                observe: 'response',
         }));
     }
 
@@ -69,9 +71,7 @@ export class AuthAPI {
         return this.statusHandler(this.http.post(`${environment.auth_api}/${route}`,
             body,
             {
-                headers: {
-                    'Csrf-Token': this.cookieService.get(environment.csrfCookieName),
-                }
+                observe: 'response',
         }));
     }
 
@@ -84,9 +84,10 @@ export class AuthAPI {
     statusHandler(observable: Observable<any>): Observable<APIResponse> {
         const self = this;
         return observable.map((response) => {
-            console.log(response)
+            //console.log("Headers:"+ JSON.stringify(response.headers.get('X-Auth-Token')))
+            console.log("Response:" +JSON.stringify(response))
             // We return a resolved promise with the APIResponse for all 2xx status codes
-                return response;
+                return response.body;
         }).catch((e: any) => {
             // If the exception is already an APIError then we throw it again
             console.log(e)
@@ -100,5 +101,6 @@ export class AuthAPI {
             const msg = environment.production === true  ? self.errorMsg : `Cannot process request; Got exception: ${e.message}`;
             throw (new APIError(new APIResponse('fatal.error', msg)));
         });
+
     }
 }

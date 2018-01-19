@@ -124,6 +124,7 @@ class SignInController @Inject() (
     silhouette.env.authenticatorService.create(loginInfo)
       .map(configureAuthenticator(rememberMe, _))
       .flatMap { authenticator =>
+
         silhouette.env.eventBus.publish(LoginEvent(user, request))
         silhouette.env.authenticatorService.init(authenticator).flatMap { cookie =>
           silhouette.env.authenticatorService.embed(
@@ -131,7 +132,7 @@ class SignInController @Inject() (
             Ok(ApiResponse(
               "auth.signIn.successful",
               Messages("auth.signed.in"),
-              Json.toJson(user)
+              Json.toJson(cookie)
             ))
           )
         }
@@ -156,7 +157,6 @@ class SignInController @Inject() (
       authenticator.copy(
         expirationDateTime = expirationDateTime,
         idleTimeout = c.getAs[FiniteDuration](s"$configPath.authenticatorIdleTimeout"),
-        cookieMaxAge = c.getAs[FiniteDuration](s"$configPath.cookieMaxAge")
       )
     } else {
       authenticator

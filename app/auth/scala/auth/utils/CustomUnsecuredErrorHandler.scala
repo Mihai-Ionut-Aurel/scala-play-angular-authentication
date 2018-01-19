@@ -4,8 +4,9 @@ import javax.inject.Inject
 
 import com.mohiva.play.silhouette.api.actions.UnsecuredErrorHandler
 import core.controllers.ApiController
+import play.api.Logger
 import play.api.i18n.Messages
-import play.api.mvc.{ ControllerComponents, RequestHeader, Result }
+import play.api.mvc.{ControllerComponents, RequestHeader, Result}
 
 import scala.concurrent.Future
 
@@ -28,6 +29,11 @@ class CustomUnsecuredErrorHandler @Inject() (
    * @return The result to send to the client.
    */
   override def onNotAuthorized(implicit request: RequestHeader): Future[Result] = {
+    Logger.debug(request.toString())
+    Logger.debug(request.cookies.toString())
+    Logger.debug(request.headers.toString())
+    Logger.debug(request.queryString.toString())
+    Logger.debug(request.rawQueryString)
     Future.successful(Forbidden(ApiResponse("auth.forbidden", Messages("auth.forbidden"))))
   }
 }

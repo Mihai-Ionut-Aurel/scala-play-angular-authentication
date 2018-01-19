@@ -6,10 +6,11 @@ import javax.inject.Inject
 
 import auth.models.AuthToken
 import auth.models.daos.AuthTokenDAO
+import play.api.Logger
 import reactivemongo.bson.BSONObjectID
 
 import scala.concurrent.duration._
-import scala.concurrent.{ ExecutionContext, Future }
+import scala.concurrent.{ExecutionContext, Future}
 import scala.language.postfixOps
 
 /**
@@ -46,7 +47,11 @@ class AuthTokenServiceImpl @Inject() (
    * @param id The token ID to validate.
    * @return The token if it's valid, None otherwise.
    */
-  def validate(id: UUID): Future[Option[AuthToken]] = authTokenDAO.find(id)
+  def validate(id: UUID): Future[Option[AuthToken]] = {
+    Logger.debug("Validate: "+id.toString())
+    authTokenDAO.find(id)
+
+  }
 
   /**
    * Cleans expired tokens.

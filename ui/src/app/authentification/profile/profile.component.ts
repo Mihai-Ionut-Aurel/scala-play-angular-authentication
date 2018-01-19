@@ -25,7 +25,7 @@ export class ProfileComponent implements OnInit {
 
     getUser() {
         console.log("Get user")
-        this.userService.getUser().map(result => {
+        this.userService.getUser().subscribe(result => {
             console.log(result)
                 // if (result === true) {
                 //    // this.router.navigate(['/']);
